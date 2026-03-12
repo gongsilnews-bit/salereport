@@ -1,0 +1,93 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>부동산 매매 보고서 AI 제작</title>
+    <!-- Premium Fonts -->
+    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,900;1,900&family=Inter:wght@400;700;900&family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: { 800: '#1e293b', 900: '#0f172a', 950: '#020617' },
+                        gold: { 400: '#fbbf24', 500: '#f59e0b', 600: '#d97706' }
+                    },
+                    fontFamily: {
+                        sans: ['Pretendard', 'Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                        'serif-en': ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @media screen {
+            .a4-landscape-preview {
+                width: 297mm;
+                height: 210mm;
+                background: white;
+                box-shadow: 0 40px 100px -20px rgba(0,0,0,0.2);
+                position: relative;
+                transform: scale(0.8);
+                transform-origin: top center;
+            }
+        }
+
+        @media print {
+            @page {
+                size: A4 landscape;
+                margin: 0;
+            }
+            
+            /* 인쇄 시 모든 부모의 스크롤 및 높이 제한을 완전히 해제 */
+            html, body, #root, #root > div, main, section, .print-area {
+                height: auto !important;
+                overflow: visible !important;
+                display: block !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                position: static !important; /* Fixed/Absolute 해제 */
+            }
+
+            .no-print, header, aside {
+                display: none !important;
+            }
+
+            .a4-landscape-preview {
+                width: 297mm !important;
+                height: 209.5mm !important; /* 210mm보다 살짝 작게 하여 다음 페이지로 넘어가는 간섭 최소화 */
+                margin: 0 !important;
+                padding: 0 !important;
+                page-break-after: always !important;
+                break-after: page !important;
+                position: relative !important;
+                display: flex !important;
+                flex-direction: column !important;
+                overflow: hidden !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            
+            /* 빈 페이지 방지 */
+            .report-container {
+                display: block !important;
+                height: auto !important;
+                overflow: visible !important;
+            }
+        }
+
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+    </style>
+</head>
+<body class="bg-slate-100">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+</body>
+</html>
