@@ -33,7 +33,7 @@ const INITIAL_INFO: PropertyInfo = {
   propertyName: "",
   targetAddress: "서울 서초구 서초동 1444-9",
   confidentialText: "CONFIDENTIAL | INFORMATION MEMORANDUM",
-  pageInfo: "PAGE 01 / 05",
+  pageInfo: "PAGE 01 / 04",
   page1: {
     title: "AI 시세\n매매 보고서",
     subTitle: "서울 서초구 서초동 1444-9",
@@ -165,7 +165,7 @@ function App() {
 
   const [user, setUser] = useState<any>(null);
   const [info, setInfo] = useState<PropertyInfo>(getInitialInfo());
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1); // Now 1 maps to original Page 2
   const [colorTheme, setColorTheme] = useState(COLOR_PALETTES[0]);
   const [layoutTheme, setLayoutTheme] = useState('modern');
 
@@ -174,7 +174,7 @@ function App() {
   const [savedReports, setSavedReports] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isAiLoading, setIsAiLoading] = useState(false);
-  const [printPages, setPrintPages] = useState<boolean[]>([true, true, true, true, true]);
+  const [printPages, setPrintPages] = useState<boolean[]>([true, true, true, true]); // 4 pages total now
   const reportRef = useRef<HTMLDivElement>(null);
 
   // Auto-save to localStorage whenever info changes
@@ -376,15 +376,15 @@ function App() {
         <section className="flex-1 bg-slate-100 p-8 overflow-y-auto flex flex-col items-center">
             <div className="w-[1122px] flex justify-between items-center mb-6 no-print">
                 <div className="flex bg-white rounded-lg p-1 border shadow-sm">
-                    {[1, 2, 3, 4, 5].map(p => (
-                        <button key={p} onClick={() => setCurrentPage(p)} className={`px-4 py-2 rounded-md text-xs font-bold ${currentPage === p ? 'bg-navy-900 text-white shadow-md' : 'text-slate-500'}`}>{p === 1 ? '표지' : `Page ${p-1}`}</button>
+                    {[1, 2, 3, 4].map(p => (
+                        <button key={p} onClick={() => setCurrentPage(p)} className={`px-4 py-2 rounded-md text-xs font-bold ${currentPage === p ? 'bg-navy-900 text-white shadow-md' : 'text-slate-50'}`}>{`Page ${p}`}</button>
                     ))}
                 </div>
                 <div className="flex items-center gap-3">
                     <div className="flex bg-white rounded-lg p-1 border shadow-sm items-center gap-1">
                         <p className="px-3 text-[10px] font-black text-slate-400 border-r">대상물건: {info.targetAddress}{info.propertyName ? ` (${info.propertyName})` : ''}</p>
-                        {[1, 2, 3, 4, 5].map((p, i) => (
-                            <button key={i} onClick={() => { const n = [...printPages]; n[i] = !n[i]; setPrintPages(n); }} className={`w-8 h-8 rounded text-[10px] font-black ${printPages[i] ? 'bg-gold-500 text-navy-950' : 'bg-slate-50 text-slate-300'}`}>{i === 0 ? '표' : i}</button>
+                        {[1, 2, 3, 4].map((p, i) => (
+                            <button key={i} onClick={() => { const n = [...printPages]; n[i] = !n[i]; setPrintPages(n); }} className={`w-8 h-8 rounded text-[10px] font-black ${printPages[i] ? 'bg-gold-500 text-navy-950' : 'bg-slate-50 text-slate-300'}`}>{p}</button>
                         ))}
                     </div>
                     <button onClick={() => window.print()} className="flex items-center gap-2 px-6 py-2.5 bg-navy-900 text-white rounded-lg text-sm font-bold shadow-xl"><ArrowDownTrayIcon className="w-5 h-5 text-gold-500" /> PDF 출력</button>
